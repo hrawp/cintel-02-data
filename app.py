@@ -62,3 +62,17 @@ with ui.sidebar():
 #   a keyword argument target= "_blank" to open the link in a new tab
 
 # When passing in multiple arguments to a function, separate them with commas.
+
+penguins = load_penguins()
+
+ui.h2("Palmer Penguins Grid View")
+with ui.layout_columns():
+    @render.data_frame  
+    def penguins_Grid_df():
+        return render.DataGrid(penguins) 
+
+ui.h2("Palmer Penguins Table View")
+with ui.layout_columns():
+    @render.data_frame  
+    def penguins_table_df():
+        return render.DataTable(penguins) 
