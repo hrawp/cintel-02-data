@@ -105,6 +105,24 @@ with ui.layout_columns():
         ax.set_ylabel("Count")
         return ax 
 
+
+
+
+with ui.layout_columns():
+    @render_plotly
+    def plotly_scatterplot():
+            return px.scatter(penguins_df,
+                x="bill_length_mm",
+                y="body_mass_g",
+                color="species",
+                title="Penguins Plot (Plotly Express)",
+                labels={
+                    "bill_length_mm": "Bill Length (mm)",
+                    "body_mass_g": "Body Mass (g)",
+                },
+                size_max=8, # set the maximum marker size
+            )
+
 ui.h6("Palmer Penguins Table View")
 with ui.layout_columns():
     @render.data_frame  
