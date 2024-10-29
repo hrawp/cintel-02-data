@@ -10,15 +10,15 @@ import palmerpenguins  # This package provides the Palmer Penguins dataset
 penguins_df = palmerpenguins.load_penguins()
 
 ui.page_opts(title="Penguin Data by Aaron", fillable=True)
-with ui.layout_columns():
+#with ui.layout_columns():
 
-    @render_plotly
-    def plot1():
-        return px.histogram(px.data.tips(), y="tip")
+#    @render_plotly
+#    def plot1():
+ #       return px.histogram(px.data.tips(), y="tip")
 
-    @render_plotly
-    def plot2():
-        return px.histogram(px.data.tips(), y="total_bill")
+#    @render_plotly
+#    def plot2():
+ #       return px.histogram(px.data.tips(), y="total_bill")
 
 # Add a Shiny UI sidebar for user interaction
 with ui.sidebar():
@@ -69,19 +69,15 @@ with ui.sidebar():
 
 penguins = load_penguins()
 
-ui.h2("Palmer Penguins Grid View")
+ui.h6("Palmer Penguins Grid View")
 with ui.layout_columns():
     @render.data_frame  
     def penguins_Grid_df():
         return render.DataGrid(penguins) 
 
-ui.h2("Palmer Penguins Table View")
-with ui.layout_columns():
-    @render.data_frame  
-    def penguins_table_df():
-        return render.DataTable(penguins) 
 
-ui.h2("Palmer Penguins Plotly Histogram")
+
+#ui.h4("Palmer Penguins Plotly Histogram")
 with ui.layout_columns():
     @render_widget  
     def create_histogram_plot():  
@@ -98,12 +94,19 @@ with ui.layout_columns():
         return scatterplot  
 
 
-ui.h2("Palmer Penguins Seaborn Histogram")
+
+#ui.h4("Palmer Penguins Seaborn Histogram")
 with ui.layout_columns():
     @render.plot(alt="A Seaborn histogram on penguin body mass in grams.")  
     def plot_histogram():  
         ax = sns.histplot(data=penguins, x="body_mass_g", bins=100)  
-        ax.set_title("Palmer Penguins")
+        ax.set_title("Penguin Mass")
         ax.set_xlabel("Mass (g)")
         ax.set_ylabel("Count")
-        return ax
+        return ax 
+
+ui.h6("Palmer Penguins Table View")
+with ui.layout_columns():
+    @render.data_frame  
+    def penguins_table_df():
+        return render.DataTable(penguins) 
