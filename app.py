@@ -79,52 +79,57 @@ with ui.layout_columns():
 
 #ui.h4("Palmer Penguins Plotly Histogram")
 with ui.layout_columns():
-    @render_widget  
-    def create_histogram_plot():  
-        scatterplot = px.histogram(
-            data_frame=penguins,
-            x="body_mass_g",
-            nbins=100,
-        ).update_layout(
-            title={"text": "Penguin Mass", "x": 0.5},
-            yaxis_title="Count",
-            xaxis_title="Body Mass (g)",
-        )
-
-        return scatterplot  
+    with ui.card():        
+        ui.card_header("Palmer Penguins Plotly Histogram")    
+        @render_widget  
+        def create_histogram_plot():  
+            scatterplot = px.histogram(
+                data_frame=penguins,
+                x="body_mass_g",
+                nbins=100,
+            ).update_layout(
+                title={"text": "Penguin Mass", "x": 0.5},
+                yaxis_title="Count",
+                xaxis_title="Body Mass (g)",
+            )    
+            return scatterplot  
 
 
 
 #ui.h4("Palmer Penguins Seaborn Histogram")
-with ui.layout_columns():
-    @render.plot(alt="A Seaborn histogram on penguin body mass in grams.")  
-    def plot_histogram():  
-        ax = sns.histplot(data=penguins, x="body_mass_g", bins=100)  
-        ax.set_title("Penguin Mass")
-        ax.set_xlabel("Mass (g)")
-        ax.set_ylabel("Count")
-        return ax 
+    with ui.card():        
+        ui.card_header("Palmer Penguins Seaborn Histogram") 
+        @render.plot(alt="A Seaborn histogram on penguin body mass in grams.")  
+        def plot_histogram():  
+            ax = sns.histplot(data=penguins, x="body_mass_g", bins=100)  
+            ax.set_title("Penguin Mass")
+            ax.set_xlabel("Mass (g)")
+            ax.set_ylabel("Count")
+            return ax 
 
 
 
 
 with ui.layout_columns():
-    @render_plotly
-    def plotly_scatterplot():
-            return px.scatter(penguins_df,
-                x="bill_length_mm",
-                y="body_mass_g",
-                color="species",
-                title="Penguins Plot (Plotly Express)",
-                labels={
-                    "bill_length_mm": "Bill Length (mm)",
-                    "body_mass_g": "Body Mass (g)",
-                },
-                size_max=8, # set the maximum marker size
-            )
+    with ui.card():        
+        ui.card_header("Plotly Scatterplot: Species")
+        @render_plotly
+        def plotly_scatterplot():
+                return px.scatter(penguins_df,
+                    x="bill_length_mm",
+                    y="body_mass_g",
+                    color="species",
+                    title="Penguins Plot (Plotly Express)",
+                    labels={
+                        "bill_length_mm": "Bill Length (mm)",
+                        "body_mass_g": "Body Mass (g)",
+                    },
+                    size_max=8, # set the maximum marker size
+                )
 
-ui.h6("Palmer Penguins Table View")
-with ui.layout_columns():
-    @render.data_frame  
-    def penguins_table_df():
-        return render.DataTable(penguins) 
+#ui.h6("Palmer Penguins Table View")
+    with ui.card():
+        ui.card_header("Palmer Penguins Table View")
+        @render.data_frame  
+        def penguins_table_df():
+            return render.DataTable(penguins) 
