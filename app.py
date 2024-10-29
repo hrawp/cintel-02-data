@@ -1,6 +1,10 @@
 import plotly.express as px
 from shiny.express import input, ui
 from shinywidgets import render_plotly
+from palmerpenguins import load_penguins
+from shiny import render
+from shinywidgets import render_widget
+import seaborn as sns
 import palmerpenguins  # This package provides the Palmer Penguins dataset
 # Use the built-in function to load the Palmer Penguins dataset
 penguins_df = palmerpenguins.load_penguins()
@@ -76,3 +80,30 @@ with ui.layout_columns():
     @render.data_frame  
     def penguins_table_df():
         return render.DataTable(penguins) 
+
+ui.h2("Palmer Penguins Plotly Histogram")
+with ui.layout_columns():
+    @render_widget  
+    def create_histogram_plot():  
+        scatterplot = px.histogram(
+            data_frame=penguins,
+            x="body_mass_g",
+            nbins=100,
+        ).update_layout(
+            title={"text": "Penguin Mass", "x": 0.5},
+            yaxis_title="Count",
+            xaxis_title="Body Mass (g)",
+        )
+
+        return scatterplot  
+
+
+ui.h2("Palmer Penguins Seaborn Histogram")
+with ui.layout_columns():
+    @render.plot(alt="A Seaborn histogram on penguin body mass in grams.")  
+    def plot_histogram():  
+        ax = sns.histplot(data=penguins, x="body_mass_g", bins=100)  
+        ax.set_title("Palmer Penguins")
+        ax.set_xlabel("Mass (g)")
+        ax.set_ylabel("Count")
+        return ax
